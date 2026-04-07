@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Berita extends Model {
+    protected $table = 'berita';
+
     protected $fillable = [
         'judul',
         'slug',

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('potensis', function (Blueprint $table) {
+        Schema::create('potensi', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->enum('kategori', ['wisata','kuliner','kerajinan','pertanian','budaya'])->default('wisata');
@@ -18,5 +18,5 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('potensis'); }
+    public function down(): void { Schema::dropIfExists('potensi'); }
 };

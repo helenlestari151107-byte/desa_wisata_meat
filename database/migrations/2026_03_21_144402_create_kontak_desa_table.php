@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('kontak_desas', function (Blueprint $table) {
+        Schema::create('kontak_desa', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('jabatan')->nullable();
@@ -15,5 +15,5 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('kontak_desas'); }
+    public function down(): void { Schema::dropIfExists('kontak_desa'); }
 };

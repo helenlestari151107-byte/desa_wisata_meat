@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('nomor_pentings', function (Blueprint $table) {
+        Schema::create('nomor_penting', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->enum('kategori', ['medis','darurat','pemerintah','utility'])->default('darurat');
@@ -15,5 +15,5 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('nomor_pentings'); }
+    public function down(): void { Schema::dropIfExists('nomor_penting'); }
 };

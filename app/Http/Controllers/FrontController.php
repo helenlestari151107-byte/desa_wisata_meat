@@ -31,7 +31,8 @@ class FrontController extends Controller
         $terkait = Berita::where('id', '!=', $berita->id)
                          ->where('is_published', true)
                          ->take(3)->get();
-        return view('front.berita-detail', compact('berita', 'terkait'));
+        $profil = ProfilDesa::first();
+        return view('front.detail', compact('berita', 'terkait', 'profil'));
     }
 
     public function beritaList()

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('galeris', function (Blueprint $table) {
+        Schema::create('galeri', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
             $table->string('gambar');
@@ -14,5 +14,5 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('galeris'); }
+    public function down(): void { Schema::dropIfExists('galeri'); }
 };
