@@ -38,8 +38,8 @@
     </a>
     <ul class="nav-menu">
       <li><a href="#beranda">Beranda</a></li>
-      <li>
-        <a href="#">Info Desa <i class="fas fa-chevron-down" style="font-size:9px"></i></a>
+      <li class="has-dd">
+        <a href="#" class="dd-toggle" onclick="toggleDD(event,this)">Info Desa <i class="fas fa-chevron-down" style="font-size:9px"></i></a>
         <div class="dd-menu">
           <a href="#profil-desa"><i class="fas fa-landmark"></i> Profil Desa</a>
           <a href="#struktur-pemerintahan"><i class="fas fa-sitemap"></i> Struktur Pemerintahan</a>
@@ -49,13 +49,12 @@
           <a href="#peta-desa"><i class="fas fa-map-marked-alt"></i> Peta Desa</a>
         </div>
       </li>
-      <li>
-        <a href="#">Potensi <i class="fas fa-chevron-down" style="font-size:9px"></i></a>
+      <li class="has-dd">
+        <a href="#" class="dd-toggle" onclick="toggleDD(event,this)">Potensi <i class="fas fa-chevron-down" style="font-size:9px"></i></a>
         <div class="dd-menu">
-          <a href="#potensi-wisata"><i class="fas fa-mountain"></i> Wisata Alam</a>
-          <a href="#potensi-wisata"><i class="fas fa-drum"></i> Wisata Budaya</a>
-          <a href="#potensi-wisata"><i class="fas fa-store"></i> UMKM Desa</a>
-          <a href="#potensi-wisata"><i class="fas fa-box-open"></i> Produk Unggulan</a>
+          <a href="#wisata-alam"><i class="fas fa-mountain"></i> Wisata Alam</a>
+          <a href="#umkm-desa"><i class="fas fa-store"></i> UMKM Desa</a>
+          <a href="#produk-unggulan"><i class="fas fa-box-open"></i> Produk Unggulan</a>
         </div>
       </li>
       <li><a href="#berita-desa"><i class="fas fa-newspaper fa-xs"></i> Berita</a></li>
@@ -94,8 +93,10 @@
       <a href="#galeri-desa" onclick="toggleDrawer()"><i class="fas fa-images"></i> Galeri & Video</a>
       <a href="#peta-desa" onclick="toggleDrawer()"><i class="fas fa-map-marked-alt"></i> Peta Desa</a>
       <div class="drawer-divider"></div>
-      <div class="drawer-section">Konten</div>
-      <a href="#potensi-wisata" onclick="toggleDrawer()"><i class="fas fa-mountain"></i> Potensi & Wisata</a>
+      <div class="drawer-section">Potensi</div>
+      <a href="#wisata-alam" onclick="toggleDrawer()"><i class="fas fa-mountain"></i> Wisata Alam</a>
+      <a href="#umkm-desa" onclick="toggleDrawer()"><i class="fas fa-store"></i> UMKM Desa</a>
+      <a href="#produk-unggulan" onclick="toggleDrawer()"><i class="fas fa-box-open"></i> Produk Unggulan</a>
       <a href="#berita-desa" onclick="toggleDrawer()"><i class="fas fa-newspaper"></i> Berita Desa</a>
       <a href="#pengumuman-desa" onclick="toggleDrawer()"><i class="fas fa-bullhorn"></i> Pengumuman</a>
       <a href="#event-desa" onclick="toggleDrawer()"><i class="fas fa-calendar-alt"></i> Event Kalender</a>
@@ -144,7 +145,7 @@
 
 {{-- QUICK STRIP --}}
 <div class="qstrip">
-  <a class="qitem" href="#profil-desa">
+  <a class="qitem" href="#peta-desa">
     <div class="qi-icon"><i class="fas fa-map-marker-alt"></i></div>
     <div class="qi-text"><div class="l1">Lokasi</div><div class="l2">Kec. Balige, Kab. Toba</div></div>
   </a>
@@ -152,11 +153,11 @@
     <div class="qi-icon"><i class="fas fa-clock"></i></div>
     <div class="qi-text"><div class="l1">Pelayanan</div><div class="l2">Senin–Jumat 08:00–16:00</div></div>
   </a>
-  <a class="qitem" href="tel:{{ $profil->no_telepon ?? '063221000' }}">
+  <a class="qitem" href="tel:{{ $profil->no_telepon ?? '063221000' }}" onclick="event.stopPropagation()">
     <div class="qi-icon"><i class="fas fa-phone"></i></div>
     <div class="qi-text"><div class="l1">Telepon Desa</div><div class="l2">{{ $profil->no_telepon ?? '(0632) 21000' }}</div></div>
   </a>
-  <a class="qitem" href="mailto:{{ $profil->email_desa ?? 'desameat@gmail.com' }}">
+  <a class="qitem" href="mailto:{{ $profil->email_desa ?? 'desameat@gmail.com' }}" onclick="event.stopPropagation()">
     <div class="qi-icon"><i class="fas fa-envelope"></i></div>
     <div class="qi-text"><div class="l1">Email Desa</div><div class="l2">{{ $profil->email_desa ?? 'desameat@gmail.com' }}</div></div>
   </a>
@@ -168,21 +169,10 @@
     <div class="profil-grid">
       <div class="profil-img-wrap" data-aos="fade-right">
         <div class="profil-main-img"></div>
-        <div class="profil-float1">
-          <span class="pf-num">2025</span>
-          <span class="pf-txt">Desa Wisata</span>
-        </div>
-        <div class="profil-float2">
-          <i class="fas fa-water"></i>
-          <div>
-            <span class="pf2-val">Toba</span>
-            <span class="pf2-lbl">Tepi Danau Toba</span>
-          </div>
-        </div>
       </div>
       <div data-aos="fade-left" data-aos-delay="100">
         <div class="sec-pill"><i class="fas fa-landmark"></i> Profil Desa</div>
-        <h2 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.2">Mengenal Lebih Dekat<br><span style="color:var(--forest)">{{ $profil->nama_desa ?? 'Desa Meat' }}</span></h2>
+        <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.2">Mengenal Lebih Dekat<br><span style="color:var(--forest)">{{ $profil->nama_desa ?? 'Desa Meat' }}</span></h2>
         <p style="font-size:14px;color:var(--slate);line-height:1.85;margin-bottom:14px">{{ $profil->sejarah ? Str::limit($profil->sejarah, 300) : 'Desa Meat adalah desa wisata yang terletak di Kecamatan Balige, Kabupaten Toba, Provinsi Sumatera Utara. Berada di tepi Danau Toba — danau vulkanik terbesar di dunia — desa ini dikelilingi pemandangan alam yang spektakuler dan kaya budaya Batak Toba.' }}</p>
         <div class="profil-facts">
           <div class="pf-item"><div class="pfi-icon"><i class="fas fa-ruler-combined"></i></div><div><div class="pfi-lbl">Luas Wilayah</div><div class="pfi-val">{{ $profil->luas_wilayah ?? '325 Ha' }}</div></div></div>
@@ -334,10 +324,10 @@
             default   => 'pt-info'
           };
           $tagLabel = match($p->tipe) {
-            'darurat' => '🔴 Penting',
-            'event'   => '🟢 Kegiatan',
-            'layanan' => '🩵 Layanan',
-            default   => '🔵 Informasi'
+            'darurat' => 'Penting',
+            'event'   => 'Kegiatan',
+            'layanan' => 'Layanan',
+            default   => 'Informasi'
           };
         @endphp
         <div class="peng-item {{ $tipeClass }}">
@@ -398,7 +388,7 @@
         @endif
         <div class="profil-float1">
           <span class="pf-num">2025</span>
-          <span class="pf-txt">Desa Wisata</span>
+          <span class="pf-txt">Desa Meat</span>
         </div>
         <div class="profil-float2">
           <i class="fas fa-water"></i>
@@ -407,7 +397,7 @@
       </div>
       <div data-aos="fade-left">
         <div class="sec-pill"><i class="fas fa-landmark"></i> Profil Desa</div>
-        <h2 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.2">Mengenal Lebih Dekat<br><span style="color:var(--forest)">{{ $profil->nama_desa ?? 'Desa Meat' }}</span></h2>
+        <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.2">Mengenal Lebih Dekat<br><span style="color:var(--forest)">{{ $profil->nama_desa ?? 'Desa Meat' }}</span></h2>
         <p style="font-size:14px;color:var(--slate);line-height:1.85;margin-bottom:14px">{{ $profil->sejarah ?? 'Desa Meat adalah desa wisata yang terletak di Kecamatan Balige, Kabupaten Toba, Provinsi Sumatera Utara.' }}</p>
         <div class="profil-facts">
           <div class="pf-item"><div class="pfi-icon"><i class="fas fa-ruler-combined"></i></div><div><div class="pfi-lbl">Luas Wilayah</div><div class="pfi-val">{{ $profil->luas_wilayah ?? '325 Ha' }}</div></div></div>
@@ -421,9 +411,51 @@
     </div>
   </div>
 </section>
-</div>
 
-{{-- ====== STRUKTUR PEMERINTAHAN ====== --}}
+{{-- Sejarah Desa di bawah Profil --}}
+<section class="section section-alt" style="padding-top:0">
+  <div class="container">
+    <div style="background:white;border-radius:var(--radius);padding:36px 40px;box-shadow:var(--sh);margin-bottom:32px" data-aos="fade-up">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:48px;height:48px;border-radius:12px;background:var(--forest);display:flex;align-items:center;justify-content:center;color:white;font-size:20px"><i class="fas fa-scroll"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);margin:0">Sejarah Desa Meat</h3>
+      </div>
+      <p style="font-size:14px;color:var(--slate);line-height:1.9;margin-bottom:16px">Sekitar 300–350 tahun yang lalu (13–15 generasi) keturunan Sibagot Nipohan mulai turun dari Kecamatan Balige untuk martoba (menangkap ikan) dan di sela-sela waktu martoba digunakan untuk membuka lahan pertanian. Pada awalnya keturunan Sibagot Nipohan tidak menetap di Meat, namun karena perjalanan keluar masuk Meat sangat melelahkan karena naik turun gunung sehingga keturunan Sibagot Nipohan mulai menetap di Meat.</p>
+      <p style="font-size:14px;color:var(--slate);line-height:1.9;margin-bottom:16px">Sibagot Nipohan memiliki empat anak yakni: Tuan Sihubil (Tampubolon), Tuan Somanimbil (Siahaan, Simanjuntak, Hutagaol), Tuan Dibangama (Panjaitan, Silitonga, Siagian, Sianipar), dan Sonak Malela (Simangunsong, Marpaung, Napitupulu, Pardede).</p>
+      <p style="font-size:14px;color:var(--slate);line-height:1.9;margin-bottom:16px">Keturunan Sibagot Nipohan merupakan penduduk asli desa Meat, namun seiring perkembangan jaman, kini sudah ada marga-marga lain yang tinggal di desa Meat dan mereka rata-rata sonduk hela (menikah dengan keturunan Sibagot Nipohan). Dalam tatanan adat di desa Meat, Horja Sibagot Nipohan yang berhak menetapkan keputusan melalui Tonggo Raja (Rapat tetua adat yang harus terwakili dari ke-4 keturunan Sibagot Nipohan).</p>
+      <p style="font-size:14px;color:var(--slate);line-height:1.9;margin-bottom:16px">Pada awalnya desa Meat terdiri dari 3 Kampung yang dipimpin oleh Hampung/Kepala Kampung. Kepala Kampung yang terakhir adalah: Hampung Meat 1 (Conrad Siahaan, Huntal Siahaan, Maja Siahaan), Hampung Meat 2 (Marga Sianipar, Simeon Tampubolon, Oberlin Tampubolon), dan Hampung Meat 3 (Josia Siahaan, Dolok Siahaan, Marincan Siahaan).</p>
+      <p style="font-size:14px;color:var(--slate);line-height:1.9">Pada tahun 1988 ketiga kampung tersebut dibentuk menjadi 1 desa yaitu desa Meat yang terdiri dari 3 dusun, dipimpin oleh carteker/pejabat kepala desa Marincan Siahaan hingga tahun 1990. Pada tahun 1990 dilakukan pemilihan kepala desa untuk pertama kalinya.</p>
+    </div>
+
+    {{-- Daftar Kepala Desa dari masa ke masa --}}
+    <div style="background:white;border-radius:var(--radius);padding:36px 40px;box-shadow:var(--sh)" data-aos="fade-up">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+        <div style="width:48px;height:48px;border-radius:12px;background:var(--teal);display:flex;align-items:center;justify-content:center;color:white;font-size:20px"><i class="fas fa-user-tie"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);margin:0">Kepala Desa dari Masa ke Masa</h3>
+      </div>
+      <p style="font-size:13px;color:var(--slate);margin-bottom:20px">Berikut nama-nama Kepala Desa Meat sejak berdiri hingga sekarang:</p>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:var(--forest);color:white">
+              <th style="padding:12px 16px;text-align:left;border-radius:8px 0 0 0">No</th>
+              <th style="padding:12px 16px;text-align:left">Nama</th>
+              <th style="padding:12px 16px;text-align:left">Masa Jabatan</th>
+              <th style="padding:12px 16px;text-align:left;border-radius:0 8px 0 0">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:var(--sand)"><td style="padding:11px 16px">1</td><td style="padding:11px 16px;font-weight:600">Marincan Siahaan</td><td style="padding:11px 16px">1988 – 1990</td><td style="padding:11px 16px">Pejabat/Carteker Kepala Desa</td></tr>
+            <tr><td style="padding:11px 16px">2</td><td style="padding:11px 16px;font-weight:600">Oberlin Tampubolon</td><td style="padding:11px 16px">1990 – 2003</td><td style="padding:11px 16px">Kepala Desa Meat</td></tr>
+            <tr style="background:var(--sand)"><td style="padding:11px 16px">3</td><td style="padding:11px 16px;font-weight:600">Pantur Marpaung</td><td style="padding:11px 16px">2003 – 2013</td><td style="padding:11px 16px">Kepala Desa Meat</td></tr>
+            <tr><td style="padding:11px 16px">4</td><td style="padding:11px 16px;font-weight:600">Janri Simanjuntak</td><td style="padding:11px 16px">2013 – Sekarang</td><td style="padding:11px 16px">Kepala Desa Meat</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
 <div id="page-struktur-pemerintahan" class="site-page" style="display:none">
 <section id="info-desa" class="section section-sand">
   <div class="container">
@@ -432,31 +464,38 @@
       <h2 class="sec-title">Informasi Lengkap <span>{{ $profil->nama_desa ?? 'Desa Meat' }}</span></h2>
     </div>
     <div class="info-tabs-wrap" data-aos="fade-up">
-      <button class="itab on" onclick="switchITab('bagan',this)">🏛️ Struktur Pemerintahan</button>
-      <button class="itab" onclick="switchITab('visi',this)">🎯 Visi & Misi</button>
-      <button class="itab" onclick="switchITab('sejarah',this)">📜 Sejarah Desa</button>
+      <button class="itab on" onclick="switchITab('bagan',this)"> Struktur Pemerintahan</button>
+      <button class="itab" onclick="switchITab('visi',this)">Visi & Misi</button>
     </div>
     <div id="itp-bagan" class="itp on" data-aos="fade-up">
       <div class="bagan-wrap">
         <div class="bagan-row">
           <div class="bagan-box top">
             <div class="bb-title">Kepala Desa</div>
-            <div class="bb-name">{{ $profil->nama_kepala_desa ?? 'Parlindungan Simbolon' }}</div>
+            <div class="bb-name">Janri Simanjuntak</div>
           </div>
         </div>
         <div style="display:flex;justify-content:center"><div style="width:2px;height:28px;background:var(--sand-d)"></div></div>
         <div class="bagan-row" style="margin-bottom:0">
           <div class="bagan-box teal">
             <div class="bb-title">Sekretaris Desa</div>
-            <div class="bb-name">Hotman Sirait, A.Md.</div>
+            <div class="bb-name">Doharni Marpaung</div>
           </div>
         </div>
         <div style="display:flex;justify-content:center"><div style="width:2px;height:28px;background:var(--sand-d)"></div></div>
         <div class="bagan-line-group">
-          <div class="bagan-box amber"><div class="bb-title">Kaur Keuangan</div><div class="bb-name">–</div></div>
-          <div class="bagan-box"><div class="bb-title">Kaur Umum</div><div class="bb-name">–</div></div>
-          <div class="bagan-box"><div class="bb-title">Kasi Pemerintahan</div><div class="bb-name">–</div></div>
-          <div class="bagan-box"><div class="bb-title">Kasi Pembangunan</div><div class="bb-name">–</div></div>
+          <div class="bagan-box amber"><div class="bb-title">Kasi Pemerintahan</div><div class="bb-name">Donald Siahaan</div></div>
+          <div class="bagan-box"><div class="bb-title">Kasi Kesejahteraan</div><div class="bb-name">Rita Simanjuntak</div></div>
+          <div class="bagan-box"><div class="bb-title">Kasi Pelayanan</div><div class="bb-name">Golda Simamora</div></div>
+          <div class="bagan-box"><div class="bb-title">Kaur Tata Usaha & Umum</div><div class="bb-name">Masrina Sianturi</div></div>
+          <div class="bagan-box amber"><div class="bb-title">Kaur Keuangan</div><div class="bb-name">Tonni Tampubolon</div></div>
+          <div class="bagan-box"><div class="bb-title">Kaur Perencanaan</div><div class="bb-name">Jarar Siahaan</div></div>
+        </div>
+        <div style="display:flex;justify-content:center"><div style="width:2px;height:28px;background:var(--sand-d)"></div></div>
+        <div class="bagan-line-group">
+          <div class="bagan-box" style="background:var(--green);color:white"><div class="bb-title" style="color:rgba(255,255,255,0.7)">Kepala Dusun 1</div><div class="bb-name" style="color:white">Desi P. Simanjuntak</div></div>
+          <div class="bagan-box" style="background:var(--green);color:white"><div class="bb-title" style="color:rgba(255,255,255,0.7)">Kepala Dusun 2</div><div class="bb-name" style="color:white">Hellen Simanjuntak</div></div>
+          <div class="bagan-box" style="background:var(--green);color:white"><div class="bb-title" style="color:rgba(255,255,255,0.7)">Kepala Dusun 3</div><div class="bb-name" style="color:white">Haposan Siahaan</div></div>
         </div>
       </div>
     </div>
@@ -464,18 +503,18 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
         <div style="background:white;border-radius:var(--radius);padding:32px;box-shadow:var(--sh);border-top:4px solid var(--forest)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><div style="width:48px;height:48px;border-radius:12px;background:var(--forest);display:flex;align-items:center;justify-content:center;color:white;font-size:22px"><i class="fas fa-eye"></i></div><h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--navy)">Visi</h3></div>
-          <p style="font-size:15px;color:var(--navy);font-style:italic;line-height:1.75;font-family:'Playfair Display',serif">"{{ $profil->visi ?? 'Terwujudnya Desa Meat sebagai Desa Wisata yang Mandiri dan Berbudaya Berbasis Kearifan Lokal Batak Toba' }}"</p>
+          <p style="font-size:15px;color:var(--navy);font-style:italic;line-height:1.75;font-family:'Playfair Display',serif">"Mewujudkan Desa Meat Maju Ekonomi, Aman, Tenteram, Mandiri dan Bermartabat"</p>
         </div>
         <div style="background:white;border-radius:var(--radius);padding:32px;box-shadow:var(--sh);border-top:4px solid var(--teal)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><div style="width:48px;height:48px;border-radius:12px;background:var(--teal);display:flex;align-items:center;justify-content:center;color:white;font-size:22px"><i class="fas fa-bullseye"></i></div><h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--navy)">Misi</h3></div>
-          <div style="font-size:14px;color:var(--slate);line-height:1.85">{!! nl2br(e($profil->misi ?? "1. Mengembangkan potensi wisata alam dan budaya\n2. Memberdayakan UMKM lokal\n3. Meningkatkan kualitas SDM\n4. Menjaga kelestarian budaya Batak Toba")) !!}</div>
+          <div style="font-size:14px;color:var(--slate);line-height:1.85">
+            <div style="margin-bottom:8px"><i class="fas fa-check-circle" style="color:var(--forest);margin-right:6px"></i>Meningkatkan Kinerja Pemerintah Desa</div>
+            <div style="margin-bottom:8px"><i class="fas fa-check-circle" style="color:var(--forest);margin-right:6px"></i>Mempertahankan Batas Wilayah</div>
+            <div style="margin-bottom:8px"><i class="fas fa-check-circle" style="color:var(--forest);margin-right:6px"></i>Mewujudkan Desa Wisata berbasis Potensi Desa</div>
+            <div style="margin-bottom:8px"><i class="fas fa-check-circle" style="color:var(--forest);margin-right:6px"></i>Meningkatkan SDM</div>
+            <div><i class="fas fa-check-circle" style="color:var(--forest);margin-right:6px"></i>Meningkatkan Potensi Pertanian</div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div id="itp-sejarah" class="itp">
-      <div style="background:white;border-radius:var(--radius);padding:36px;box-shadow:var(--sh);max-width:820px;margin:0 auto">
-        <h3 style="font-family:'Playfair Display',serif;font-size:26px;color:var(--navy);margin-bottom:20px">Sejarah {{ $profil->nama_desa ?? 'Desa Meat' }}</h3>
-        <p style="font-size:14px;color:var(--slate);line-height:1.85">{{ $profil->sejarah ?? 'Desa Meat telah berdiri sejak ratusan tahun silam sebagai pemukiman suku Batak Toba di tepi Danau Toba. Nama "Meat" berasal dari kata dalam bahasa Batak yang berarti tempat yang nyaman dan damai.' }}</p>
       </div>
     </div>
   </div>
@@ -492,43 +531,42 @@
       <p class="sec-desc light">Data kependudukan dan statistik desa yang diperbarui secara berkala</p>
     </div>
     <div class="infografis-grid" data-aos="fade-up">
-      <div class="ig-card"><div class="ig-icon"><i class="fas fa-users"></i></div><div class="ig-num" id="ig1">{{ number_format($profil->jumlah_penduduk ?? 0) }}</div><div class="ig-lbl">Total Penduduk</div></div>
-      <div class="ig-card"><div class="ig-icon"><i class="fas fa-male"></i></div><div class="ig-num" id="ig2">{{ number_format(intval(($profil->jumlah_penduduk ?? 0) * 0.51)) }}</div><div class="ig-lbl">Laki-laki</div></div>
-      <div class="ig-card"><div class="ig-icon"><i class="fas fa-female"></i></div><div class="ig-num" id="ig3">{{ number_format(intval(($profil->jumlah_penduduk ?? 0) * 0.49)) }}</div><div class="ig-lbl">Perempuan</div></div>
-      <div class="ig-card"><div class="ig-icon"><i class="fas fa-home"></i></div><div class="ig-num" id="ig4">{{ number_format($profil->jumlah_kk ?? 0) }}</div><div class="ig-lbl">Kepala Keluarga</div></div>
+      <div class="ig-card"><div class="ig-icon"><i class="fas fa-users"></i></div><div class="ig-num" id="ig1">799</div><div class="ig-lbl">Total Penduduk</div></div>
+      <div class="ig-card"><div class="ig-icon"><i class="fas fa-male"></i></div><div class="ig-num" id="ig2">408</div><div class="ig-lbl">Laki-laki</div></div>
+      <div class="ig-card"><div class="ig-icon"><i class="fas fa-female"></i></div><div class="ig-num" id="ig3">391</div><div class="ig-lbl">Perempuan</div></div>
+      <div class="ig-card"><div class="ig-icon"><i class="fas fa-home"></i></div><div class="ig-num" id="ig4">232</div><div class="ig-lbl">Kepala Keluarga</div></div>
     </div>
     <div class="charts-grid" data-aos="fade-up">
       <div class="chart-card">
-        <h4><i class="fas fa-briefcase"></i> Mata Pencaharian</h4>
-        <div class="bar-row"><div class="bar-lbl">Petani</div><div class="bar-track"><div class="bar-fill green" style="width:0" data-w="72%"></div></div><div class="bar-val">72%</div></div>
-        <div class="bar-row"><div class="bar-lbl">Nelayan</div><div class="bar-track"><div class="bar-fill teal" style="width:0" data-w="15%"></div></div><div class="bar-val">15%</div></div>
-        <div class="bar-row"><div class="bar-lbl">PNS / TNI</div><div class="bar-track"><div class="bar-fill amber" style="width:0" data-w="8%"></div></div><div class="bar-val">8%</div></div>
-        <div class="bar-row"><div class="bar-lbl">Pedagang</div><div class="bar-track"><div class="bar-fill terracot" style="width:0" data-w="5%"></div></div><div class="bar-val">5%</div></div>
+        <h4><i class="fas fa-map-marker-alt"></i> Penduduk per Dusun</h4>
+        <div class="bar-row"><div class="bar-lbl">Dusun 1</div><div class="bar-track"><div class="bar-fill green" style="width:0" data-w="{{ round(333/799*100) }}%"></div></div><div class="bar-val">333 Jiwa</div></div>
+        <div class="bar-row"><div class="bar-lbl">Dusun 2</div><div class="bar-track"><div class="bar-fill teal" style="width:0" data-w="{{ round(190/799*100) }}%"></div></div><div class="bar-val">190 Jiwa</div></div>
+        <div class="bar-row"><div class="bar-lbl">Dusun 3</div><div class="bar-track"><div class="bar-fill amber" style="width:0" data-w="{{ round(276/799*100) }}%"></div></div><div class="bar-val">276 Jiwa</div></div>
       </div>
       <div class="chart-card">
-        <h4><i class="fas fa-graduation-cap"></i> Tingkat Pendidikan</h4>
-        <div class="bar-row"><div class="bar-lbl">SMA/SMK</div><div class="bar-track"><div class="bar-fill amber" style="width:0" data-w="45%"></div></div><div class="bar-val">45%</div></div>
-        <div class="bar-row"><div class="bar-lbl">SMP</div><div class="bar-track"><div class="bar-fill green" style="width:0" data-w="28%"></div></div><div class="bar-val">28%</div></div>
-        <div class="bar-row"><div class="bar-lbl">SD</div><div class="bar-track"><div class="bar-fill teal" style="width:0" data-w="18%"></div></div><div class="bar-val">18%</div></div>
-        <div class="bar-row"><div class="bar-lbl">Sarjana+</div><div class="bar-track"><div class="bar-fill terracot" style="width:0" data-w="9%"></div></div><div class="bar-val">9%</div></div>
+        <h4><i class="fas fa-users"></i> Kepala Keluarga per Dusun</h4>
+        <div class="bar-row"><div class="bar-lbl">Dusun 1</div><div class="bar-track"><div class="bar-fill green" style="width:0" data-w="{{ round(100/232*100) }}%"></div></div><div class="bar-val">100 KK</div></div>
+        <div class="bar-row"><div class="bar-lbl">Dusun 2</div><div class="bar-track"><div class="bar-fill teal" style="width:0" data-w="{{ round(53/232*100) }}%"></div></div><div class="bar-val">53 KK</div></div>
+        <div class="bar-row"><div class="bar-lbl">Dusun 3</div><div class="bar-track"><div class="bar-fill amber" style="width:0" data-w="{{ round(79/232*100) }}%"></div></div><div class="bar-val">79 KK</div></div>
       </div>
       <div class="chart-card">
         <h4><i class="fas fa-venus-mars"></i> Rasio Gender</h4>
         <div class="donut-wrap">
           <svg width="90" height="90" viewBox="0 0 90 90">
             <circle cx="45" cy="45" r="34" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="14"/>
-            <circle cx="45" cy="45" r="34" fill="none" stroke="#4CAF73" stroke-width="14" stroke-dasharray="108 106" stroke-dashoffset="22" stroke-linecap="round"/>
-            <circle cx="45" cy="45" r="34" fill="none" stroke="#F4C262" stroke-width="14" stroke-dasharray="106 108" stroke-dashoffset="-86" stroke-linecap="round"/>
+            <circle cx="45" cy="45" r="34" fill="none" stroke="#4CAF73" stroke-width="14" stroke-dasharray="{{ round(408/799*214) }} {{ round(391/799*214) }}" stroke-dashoffset="22" stroke-linecap="round"/>
+            <circle cx="45" cy="45" r="34" fill="none" stroke="#F4C262" stroke-width="14" stroke-dasharray="{{ round(391/799*214) }} {{ round(408/799*214) }}" stroke-dashoffset="-{{ round(408/799*214)-22 }}" stroke-linecap="round"/>
             <text x="45" y="50" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Playfair Display">51%</text>
           </svg>
           <div class="donut-legend">
-            <div class="dleg"><div class="dleg-dot" style="background:#4CAF73"></div>Laki-laki 51%</div>
-            <div class="dleg"><div class="dleg-dot" style="background:#F4C262"></div>Perempuan 49%</div>
+            <div class="dleg"><div class="dleg-dot" style="background:#4CAF73"></div>Laki-laki 51% (408)</div>
+            <div class="dleg"><div class="dleg-dot" style="background:#F4C262"></div>Perempuan 49% (391)</div>
           </div>
         </div>
-        <div class="bar-row"><div class="bar-lbl">0–14 thn</div><div class="bar-track"><div class="bar-fill green" style="width:0" data-w="25%"></div></div><div class="bar-val">25%</div></div>
-        <div class="bar-row"><div class="bar-lbl">15–64 thn</div><div class="bar-track"><div class="bar-fill amber" style="width:0" data-w="66%"></div></div><div class="bar-val">66%</div></div>
-        <div class="bar-row"><div class="bar-lbl">65+ thn</div><div class="bar-track"><div class="bar-fill terracot" style="width:0" data-w="9%"></div></div><div class="bar-val">9%</div></div>
+        <div class="bar-row"><div class="bar-lbl">0–5 thn</div><div class="bar-track"><div class="bar-fill green" style="width:0" data-w="{{ round(52/799*100) }}%"></div></div><div class="bar-val">52 Jiwa</div></div>
+        <div class="bar-row"><div class="bar-lbl">6–12 thn</div><div class="bar-track"><div class="bar-fill amber" style="width:0" data-w="{{ round(91/799*100) }}%"></div></div><div class="bar-val">91 Jiwa</div></div>
+        <div class="bar-row"><div class="bar-lbl">13–16 thn</div><div class="bar-track"><div class="bar-fill teal" style="width:0" data-w="{{ round(80/799*100) }}%"></div></div><div class="bar-val">80 Jiwa</div></div>
+        <div class="bar-row"><div class="bar-lbl">17+ thn</div><div class="bar-track"><div class="bar-fill terracot" style="width:0" data-w="{{ round(576/799*100) }}%"></div></div><div class="bar-val">576 Jiwa</div></div>
       </div>
     </div>
   </div>
@@ -591,11 +629,11 @@
     </div>
     <div class="wisata-filter" data-aos="fade-up">
       <button class="wfbtn on" onclick="filterWisata('all',this)">Semua</button>
-      <button class="wfbtn" onclick="filterWisata('wisata',this)">🏔️ Wisata Alam</button>
-      <button class="wfbtn" onclick="filterWisata('budaya',this)">🥁 Wisata Budaya</button>
-      <button class="wfbtn" onclick="filterWisata('kerajinan',this)">🛍️ Kerajinan</button>
-      <button class="wfbtn" onclick="filterWisata('kuliner',this)">🍲 Kuliner</button>
-      <button class="wfbtn" onclick="filterWisata('pertanian',this)">🌾 Pertanian</button>
+      <button class="wfbtn" onclick="filterWisata('wisata',this)">Wisata Alam</button>
+      <button class="wfbtn" onclick="filterWisata('budaya',this)">Wisata Budaya</button>
+      <button class="wfbtn" onclick="filterWisata('kerajinan',this)">Kerajinan</button>
+      <button class="wfbtn" onclick="filterWisata('kuliner',this)">Kuliner</button>
+      <button class="wfbtn" onclick="filterWisata('pertanian',this)">Pertanian</button>
     </div>
     <div class="wisata-grid" id="wisataGrid" data-aos="fade-up">
       @forelse($potensis as $p)
@@ -633,6 +671,203 @@
 </section>
 </div>
 
+{{-- ====== WISATA BUDAYA ====== --}}
+<div id="page-wisata-budaya" class="site-page" style="display:none">
+<section id="wisata-budaya" class="section section-sand">
+  <div class="container">
+    <div class="sec-head" data-aos="fade-up">
+      <div class="sec-pill"><i class="fas fa-drum"></i> Wisata Budaya</div>
+      <h2 class="sec-title">Wisata Budaya <span>Desa Meat</span></h2>
+      <p class="sec-desc">Kekayaan budaya Batak Toba yang terjaga dan menjadi daya tarik wisata Desa Meat</p>
+    </div>
+    <div class="wisata-grid" data-aos="fade-up">
+      @forelse($potensis->where('kategori','budaya') as $p)
+      <div class="wcard">
+        <div class="wcard-img">
+          @if($p->gambar)
+            <img loading="lazy" src="{{ Storage::url($p->gambar) }}" alt="{{ $p->nama }}">
+          @else
+            <img loading="lazy" src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=80" alt="{{ $p->nama }}">
+          @endif
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Budaya</div>
+          <div class="wcard-info">
+            <div class="wcard-name">{{ $p->nama }}</div>
+            @if($p->lokasi)<div class="wcard-loc"><i class="fas fa-map-marker-alt"></i> {{ $p->lokasi }}</div>@endif
+          </div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-desc">{{ Str::limit($p->deskripsi, 120) }}</div>
+        </div>
+      </div>
+      @empty
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1601925228008-52ee5e6e0949?w=600&q=80" alt="Gondang Batak">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Budaya</div>
+          <div class="wcard-info"><div class="wcard-name">Gondang Batak</div><div class="wcard-loc"><i class="fas fa-map-marker-alt"></i> Desa Meat</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Pertunjukan musik tradisional Gondang Batak yang memukau dengan alat musik khas Batak Toba</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Ulos Batak">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Budaya</div>
+          <div class="wcard-info"><div class="wcard-name">Tenun Ulos Batak</div><div class="wcard-loc"><i class="fas fa-map-marker-alt"></i> Desa Meat</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Tradisi menenun kain Ulos yang diwariskan turun-temurun sebagai simbol budaya Batak Toba</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80" alt="Tor Tor">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Budaya</div>
+          <div class="wcard-info"><div class="wcard-name">Tari Tor-Tor</div><div class="wcard-loc"><i class="fas fa-map-marker-alt"></i> Desa Meat</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Tarian adat Batak yang penuh makna filosofis dan biasa dipertunjukkan pada upacara adat</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Rumah Adat">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Budaya</div>
+          <div class="wcard-info"><div class="wcard-name">Rumah Adat Batak</div><div class="wcard-loc"><i class="fas fa-map-marker-alt"></i> Desa Meat</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Rumah tradisional Batak Toba dengan arsitektur khas yang masih terpelihara di Desa Meat</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80" alt="Upacara Adat">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Budaya</div>
+          <div class="wcard-info"><div class="wcard-name">Upacara Adat Batak</div><div class="wcard-loc"><i class="fas fa-map-marker-alt"></i> Desa Meat</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Berbagai upacara adat yang masih dilaksanakan oleh masyarakat Desa Meat sebagai warisan leluhur</div></div>
+      </div>
+      @endforelse
+    </div>
+  </div>
+</section>
+</div>
+
+{{-- ====== UMKM DESA ====== --}}
+<div id="page-umkm-desa" class="site-page" style="display:none">
+<section id="umkm-desa" class="section section-alt">
+  <div class="container">
+    <div class="sec-head" data-aos="fade-up">
+      <div class="sec-pill" style="background:rgba(200,150,62,0.1);color:var(--amber)"><i class="fas fa-store"></i> UMKM Desa</div>
+      <h2 class="sec-title">UMKM <span>Desa Meat</span></h2>
+      <p class="sec-desc">Usaha Mikro Kecil Menengah yang berkembang dan menjadi tulang punggung perekonomian Desa Meat</p>
+    </div>
+    <div class="layanan-grid" data-aos="fade-up">
+      @forelse($potensis->where('kategori','umkm') as $p)
+      <div class="lcard">
+        <div class="lcard-icon l-amber"><i class="{{ $p->ikon ?? 'fas fa-store' }}"></i></div>
+        <div class="lcard-title">{{ $p->nama }}</div>
+        <div class="lcard-desc">{{ Str::limit($p->deskripsi, 100) }}</div>
+      </div>
+      @empty
+      <div class="lcard"><div class="lcard-icon l-amber"><i class="fas fa-fish"></i></div><div class="lcard-title">Pengolahan Ikan Danau</div><div class="lcard-desc">Usaha pengolahan ikan dari Danau Toba menjadi produk olahan bernilai tinggi</div></div>
+      <div class="lcard"><div class="lcard-icon l-green"><i class="fas fa-leaf"></i></div><div class="lcard-title">Pertanian Organik</div><div class="lcard-desc">Pertanian organik yang memanfaatkan lahan subur di sekitar Danau Toba</div></div>
+      <div class="lcard"><div class="lcard-icon l-teal"><i class="fas fa-cut"></i></div><div class="lcard-title">Kerajinan Tenun Ulos</div><div class="lcard-desc">Usaha pembuatan kain Ulos tradisional Batak yang dipasarkan ke berbagai daerah</div></div>
+      <div class="lcard"><div class="lcard-icon l-navy"><i class="fas fa-utensils"></i></div><div class="lcard-title">Kuliner Tradisional</div><div class="lcard-desc">Usaha kuliner makanan khas Batak Toba yang menjadi daya tarik wisatawan</div></div>
+      <div class="lcard"><div class="lcard-icon l-amber"><i class="fas fa-ship"></i></div><div class="lcard-title">Wisata Perahu</div><div class="lcard-desc">Jasa wisata perahu di Danau Toba yang dikelola masyarakat setempat</div></div>
+      <div class="lcard"><div class="lcard-icon l-green"><i class="fas fa-home"></i></div><div class="lcard-title">Homestay Desa</div><div class="lcard-desc">Penginapan rumah warga yang menawarkan pengalaman menginap autentik di desa wisata</div></div>
+      <div class="lcard"><div class="lcard-icon l-teal"><i class="fas fa-shopping-bag"></i></div><div class="lcard-title">Souvenir & Kerajinan</div><div class="lcard-desc">Toko oleh-oleh khas Desa Meat yang menjual souvenir dan kerajinan tangan lokal</div></div>
+      <div class="lcard"><div class="lcard-icon l-navy"><i class="fas fa-seedling"></i></div><div class="lcard-title">Budidaya Ikan</div><div class="lcard-desc">Keramba ikan di Danau Toba yang dikelola kelompok tani nelayan Desa Meat</div></div>
+      @endforelse
+    </div>
+  </div>
+</section>
+</div>
+
+{{-- ====== PRODUK UNGGULAN ====== --}}
+<div id="page-produk-unggulan" class="site-page" style="display:none">
+<section id="produk-unggulan" class="section section-sand">
+  <div class="container">
+    <div class="sec-head" data-aos="fade-up">
+      <div class="sec-pill" style="background:rgba(0,109,119,0.1);color:var(--teal)"><i class="fas fa-box-open"></i> Produk Unggulan</div>
+      <h2 class="sec-title">Produk Unggulan <span>Desa Meat</span></h2>
+      <p class="sec-desc">Produk-produk unggulan khas Desa Meat yang telah dikenal dan diminati pasar</p>
+    </div>
+    <div class="wisata-grid" data-aos="fade-up">
+      @forelse($potensis->where('kategori','produk') as $p)
+      <div class="wcard">
+        <div class="wcard-img">
+          @if($p->gambar)
+            <img loading="lazy" src="{{ Storage::url($p->gambar) }}" alt="{{ $p->nama }}">
+          @else
+            <img loading="lazy" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="{{ $p->nama }}">
+          @endif
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Produk</div>
+          <div class="wcard-info"><div class="wcard-name">{{ $p->nama }}</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">{{ Str::limit($p->deskripsi, 120) }}</div></div>
+      </div>
+      @empty
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80" alt="Ikan Bakar">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Kuliner</div>
+          <div class="wcard-info"><div class="wcard-name">Ikan Bakar Danau Toba</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Ikan segar dari Danau Toba yang diolah dengan bumbu khas Batak, menjadi kuliner favorit wisatawan</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Kain Ulos">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Kerajinan</div>
+          <div class="wcard-info"><div class="wcard-name">Kain Ulos Batak</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Kain tenun tradisional Batak yang dibuat dengan teknik turun-temurun, memiliki nilai seni dan budaya tinggi</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1497534446932-c925b458314e?w=600&q=80" alt="Kopi Batak">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Pertanian</div>
+          <div class="wcard-info"><div class="wcard-name">Kopi Arabika Batak</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Kopi arabika berkualitas tinggi yang ditanam di dataran tinggi sekitar Danau Toba dengan cita rasa khas</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80" alt="Kerajinan Kayu">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Kerajinan</div>
+          <div class="wcard-info"><div class="wcard-name">Ukiran Kayu Batak</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Hasil ukiran kayu khas Batak yang menggambarkan motif tradisional, dijual sebagai souvenir khas desa</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1567306301408-9b74779a11af?w=600&q=80" alt="Sayuran Segar">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Pertanian</div>
+          <div class="wcard-info"><div class="wcard-name">Sayuran Organik Segar</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Sayuran organik segar yang ditanam di lahan subur Desa Meat dan dipasarkan ke pasar lokal</div></div>
+      </div>
+      <div class="wcard">
+        <div class="wcard-img">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Naniura">
+          <div class="wcard-overlay"></div>
+          <div class="wcard-badge">Kuliner</div>
+          <div class="wcard-info"><div class="wcard-name">Naniura & Arsik</div></div>
+        </div>
+        <div class="wcard-body"><div class="wcard-desc">Masakan khas Batak Toba berbahan ikan Danau Toba yang diolah dengan bumbu khas rempah lokal</div></div>
+      </div>
+      @endforelse
+    </div>
+  </div>
+</section>
+</div>
+
 {{-- ====== GALERI ====== --}}
 <div id="page-galeri-desa" class="site-page" style="display:none">
 <section id="galeri" class="section section-alt">
@@ -644,11 +879,11 @@
     </div>
     <div class="galeri-filter-row" data-aos="fade-up">
       <button class="gfbtn on" onclick="filterGaleri('all',this)">Semua</button>
-      <button class="gfbtn" onclick="filterGaleri('alam',this)">🏔️ Alam</button>
-      <button class="gfbtn" onclick="filterGaleri('budaya',this)">🎭 Budaya</button>
-      <button class="gfbtn" onclick="filterGaleri('event',this)">⭐ Event</button>
-      <button class="gfbtn" onclick="filterGaleri('kuliner',this)">🍲 Kuliner</button>
-      <button class="gfbtn" onclick="filterGaleri('infrastruktur',this)">🏗️ Infrastruktur</button>
+      <button class="gfbtn" onclick="filterGaleri('alam',this)">Alam</button>
+      <button class="gfbtn" onclick="filterGaleri('budaya',this)">Budaya</button>
+      <button class="gfbtn" onclick="filterGaleri('event',this)">Event</button>
+      <button class="gfbtn" onclick="filterGaleri('kuliner',this)">Kuliner</button>
+      <button class="gfbtn" onclick="filterGaleri('infrastruktur',this)">Infrastruktur</button>
     </div>
     <div class="galeri-masonry" id="galeriMasonry" data-aos="fade-up">
       @forelse($galeris as $i => $g)
@@ -721,7 +956,6 @@
         <div class="lcard-icon {{ $lclass }}"><i class="{{ $l->ikon ?? 'fas fa-cog' }}"></i></div>
         <div class="lcard-title">{{ $l->nama }}</div>
         <div class="lcard-desc">{{ Str::limit($l->deskripsi ?? '', 70) }}</div>
-        <a href="#" class="lcard-link">Info <i class="fas fa-arrow-right"></i></a>
       </div>
       @empty
       <div class="lcard"><div class="lcard-icon l-green"><i class="fas fa-id-card"></i></div><div class="lcard-title">Surat Keterangan</div><div class="lcard-desc">Domisili, usaha, dan keterangan lainnya</div></div>
@@ -817,6 +1051,8 @@
 </div>
 
 {{-- ====== PETA DESA ====== --}}
+<div id="page-peta-desa" class="site-page" style="display:none">
+
 <section id="peta" class="section section-sand">
   <div class="container">
     <div class="sec-head">
@@ -824,13 +1060,34 @@
       <h2 class="sec-title">Lokasi <span>Desa Meat</span></h2>
       <p class="sec-desc">Desa Meat, Kecamatan Tampahan, Kabupaten Toba, Sumatera Utara</p>
     </div>
-      <!-- MAP ( KOSONG) -->
-<div id="mapLeaflet"
-     style="height:500px; width:100%; border-radius:16px; overflow:hidden;"
-     data-lat="2.3106"
-     data-lng="99.0046"
-     data-nama="Desa Meat"
-     data-alamat="Kec. Tampahan, Kab. Toba">
+    
+    <!-- PETA GOOGLE MAPS SATELIT DESA MEAT -->
+<div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--sh-lg)">
+  <a href="https://maps.app.goo.gl/g4i8tqBBm4qRm5Ug9" target="_blank" rel="noopener" title="Buka di Google Maps" style="display:block;position:absolute;inset:0;z-index:10;cursor:pointer"></a>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d999.4133!2d99.00364116428517!3d2.3255356548046326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMsKwMTknMzIuMCJOIDk5wrAwMCcxMy4xIkU!5e1!3m2!1sid!2sid!4v1699999999999!5m2!1sid!2sid"
+    width="100%"
+    height="500"
+    style="border:0;display:block;filter:brightness(0.97)"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+  <!-- Overlay info card -->
+  <div style="position:absolute;bottom:20px;left:20px;z-index:20;background:white;border-radius:12px;padding:14px 18px;box-shadow:0 4px 24px rgba(0,0,0,0.2);display:flex;align-items:center;gap:12px;pointer-events:none">
+    <div style="width:40px;height:40px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <i class="fas fa-map-marker-alt" style="color:white;font-size:18px"></i>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:13px;color:var(--navy)">Desa Meat</div>
+      <div style="font-size:11px;color:var(--slate)">Kec. Balige, Kab. Toba, Sumatera Utara</div>
+    </div>
+  </div>
+  <!-- Open in Maps button -->
+  <a href="https://maps.app.goo.gl/g4i8tqBBm4qRm5Ug9" target="_blank" rel="noopener"
+     style="position:absolute;top:16px;right:16px;z-index:20;background:var(--forest);color:white;padding:8px 16px;border-radius:50px;font-size:12px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:6px;box-shadow:0 2px 10px rgba(0,0,0,0.3)">
+    <i class="fas fa-external-link-alt"></i> Buka Google Maps
+  </a>
 </div>
 
     </div>
@@ -901,11 +1158,6 @@
 </footer>
 
 {{-- ====== FLOATING ELEMENTS ====== --}}
-<div class="visit-pill">
-  <i class="fas fa-eye vp-icon"></i>
-  <span class="vp-label">Kunjungan Hari Ini</span>
-  <span class="vp-num" id="vpNum">0</span>
-</div>
 
 <div class="frc-panel hub-panel" id="frcPanelHub">
   <h4><i class="fas fa-headset"></i> Hubungi Kami</h4>
@@ -916,7 +1168,6 @@
   <a class="panel-li" href="mailto:{{ $profil->email_desa }}"><i class="fas fa-envelope"></i> Email Kantor Desa</a>
   @endif
   <a class="panel-li" href="#kontak-desa"><i class="fas fa-list"></i> Semua Kontak Penting</a>
-  <a class="panel-li" href="#peta-desa"><i class="fas fa-map-marker-alt"></i> Lokasi di Peta</a>
 </div>
 <div class="frc-panel ak-panel" id="frcPanelAk">
   <h4><i class="fas fa-universal-access"></i> Aksesibilitas</h4>
@@ -934,10 +1185,6 @@
   <button class="frc-btn" onclick="toggleFrcPanel('hub')" id="btnHub">
     <i class="fas fa-headset"></i>
     <span class="frc-tip">Hubungi Kami</span>
-  </button>
-  <button class="frc-btn ak" onclick="toggleFrcPanel('ak')" id="btnAk">
-    <i class="fas fa-universal-access"></i>
-    <span class="frc-tip">Aksesibilitas</span>
   </button>
 </div>
 

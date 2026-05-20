@@ -24,13 +24,14 @@ Route::get('/event', [FrontController::class, 'eventList'])->name('event.index')
 Route::get('/pengumuman', [FrontController::class, 'pengumumanList'])->name('pengumuman.index');
 
 // ====== AUTH ROUTES ======
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 // ====== ADMIN ROUTES ======
 Route::prefix('admin')
     ->middleware(['auth'])
     ->name('admin.')
     ->group(function () {
+        
 
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -53,3 +54,6 @@ Route::prefix('admin')
 
 // Redirect /admin → /admin/dashboard
 Route::redirect('/admin', '/admin/dashboard');
+Route::get('/home', function () {
+    return redirect('/admin/dashboard');
+});

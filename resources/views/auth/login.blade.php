@@ -206,6 +206,9 @@
                 </div>
                 <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> &nbsp; Masuk ke Panel Admin</button>
             </form>
+            <div style="margin-top:20px;padding-top:18px;border-top:1px solid #f1f5f9;text-align:center;font-size:13px;color:#64748b">
+                Belum punya akun? <a href="{{ route('register') }}" style="color:#1B5E2F;font-weight:700;text-decoration:none"><i class="fas fa-user-plus"></i> Daftar Admin Baru</a>
+            </div>
         </div>
         <a href="{{ route('home') }}" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Website</a>
     </div>

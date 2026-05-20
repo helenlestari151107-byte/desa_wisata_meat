@@ -12,7 +12,7 @@ class FrontController extends Controller
         $beritas     = Berita::where('is_published', true)->orderBy('published_at', 'desc')->take(6)->get();
         $pengumumans = Pengumuman::where('is_aktif', true)->orderBy('tanggal', 'desc')->take(5)->get();
         $potensis    = Potensi::where('is_aktif', true)->take(6)->get();
-        $events      = Event::where('is_aktif', true)->orderBy('tanggal_mulai', 'asc')->take(6)->get();
+        $events      = Event::where('is_aktif', true)->where('tanggal_mulai', '>', now())->orderBy('tanggal_mulai', 'asc')->take(6)->get();
         $galeris     = Galeri::orderBy('created_at', 'desc')->take(12)->get();
         $layanans    = Layanan::where('is_aktif', true)->orderBy('urutan')->get();
         $kontaks     = KontakDesa::all();
@@ -45,7 +45,7 @@ class FrontController extends Controller
     public function eventList()
     {
         $profil = ProfilDesa::first();
-        $events = Event::where('is_aktif', true)->orderBy('tanggal_mulai', 'asc')->paginate(9);
+        $events = Event::where('is_aktif', true)->where('tanggal_mulai', '>', now())->orderBy('tanggal_mulai', 'asc')->paginate(9);
         return view('front.event', compact('profil', 'events'));
     }
 

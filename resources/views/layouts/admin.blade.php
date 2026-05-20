@@ -12,7 +12,7 @@
       --teal: #006D77;
       --amber: #C8963E;
       --navy: #1A2744;
-      --slate: #4B5C6B;
+      --slate: #acb6be;
       --sand: #F5EFE0;
       --smoke: #F8F9FA
     }

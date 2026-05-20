@@ -13,10 +13,13 @@
       </div>
     </a>
     <ul class="nav-menu" style="display:flex">
-      <li><a href="{{ route('home') }}"><i class="fas fa-home fa-xs"></i> Beranda</a></li>
+      <li><a href="{{ route('home') }}#beranda"><i class="fas fa-home fa-xs"></i> Beranda</a></li>
+      <li><a href="{{ route('home') }}#profil-desa">Info Desa</a></li>
+      <li><a href="{{ route('home') }}#potensi-wisata">Potensi</a></li>
       <li><a href="{{ route('berita.index') }}"><i class="fas fa-newspaper fa-xs"></i> Berita</a></li>
-      <li><a href="{{ route('event.index') }}" class="nav-active"><i class="fas fa-calendar-alt fa-xs"></i> Event</a></li>
       <li><a href="{{ route('pengumuman.index') }}"><i class="fas fa-bullhorn fa-xs"></i> Pengumuman</a></li>
+      <li><a href="{{ route('home') }}#layanan-desa"><i class="fas fa-concierge-bell fa-xs"></i> Layanan</a></li>
+      <li><a href="{{ route('event.index') }}" class="nav-active"><i class="fas fa-calendar-alt fa-xs"></i> Event</a></li>
     </ul>
     <a href="{{ route('home') }}" class="btn-admin-nav"><i class="fas fa-arrow-left"></i> Beranda</a>
   </div>
